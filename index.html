@@ -8,25 +8,20 @@
   body {
     margin: 0; padding: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #fbc7a4, #c9e3ff, #a1c4fd);
-    background-size: 400% 400%;
-    animation: gradientBG 20s ease infinite;
-    color: #222;
+    background-color: #000000;
+    color: #f0f0f0;
     text-align: center;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
-  @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
 
   h1 {
     margin-bottom: 30px;
     font-size: 28px;
-    text-shadow: 1px 1px 3px #fff;
+    font-weight: 600;
+    color: #ddd;
+    text-shadow: 1px 1px 3px #222;
   }
 
   .grid {
@@ -50,31 +45,31 @@
   }
 
   .frame {
-    background: linear-gradient(145deg, #a1c4fd, #c2e9fb);
+    background: #111111;
     border-radius: 15px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.18);
-    border: 3px solid #fff;
+    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.1);
+    border: 2px solid #444;
     width: 180px;
     padding: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Fix frame height */
     max-height: 280px;
   }
 
   .frame:hover {
     transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 20px rgba(255,255,255,0.2);
   }
 
   video {
     width: 100%;
     max-height: 140px;
     border-radius: 10px;
-    background: black;
+    background: #000;
     object-fit: cover;
+    box-shadow: 0 0 8px #333;
   }
 
   .speed-info {
@@ -85,40 +80,45 @@
   .rate-label {
     font-size: 13px;
     font-weight: 600;
-    color: #222;
+    color: #ccc;
     margin-bottom: 4px;
+    text-shadow: 0 0 2px #000;
   }
 
   .progress-bar {
     height: 12px;
     border-radius: 8px;
-    background-color: #d0d0d0;
+    background-color: #222;
     overflow: hidden;
     margin-bottom: 12px;
+    box-shadow: inset 0 0 5px #000;
   }
 
   .progress-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #43cea2, #185a9d);
+    background: linear-gradient(90deg, #4caf50, #087f23);
     transition: width 1.4s ease;
+    box-shadow: 0 0 8px #4caf50;
   }
 
   .progress-upload .progress-fill {
-    background: linear-gradient(90deg, #f7971e, #ffd200);
+    background: linear-gradient(90deg, #2196f3, #0d47a1);
+    box-shadow: 0 0 8px #2196f3;
   }
 
   footer {
     margin-top: 40px;
     padding: 20px;
-    background: #222;
-    color: #fff;
+    background: #111;
+    color: #ddd;
     font-size: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    border-top: 5px solid #f7971e;
+    border-top: 3px solid #2196f3;
+    box-shadow: 0 -3px 10px #222 inset;
   }
 
   footer img {
@@ -126,8 +126,9 @@
     height: 90px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #fff;
+    border: 3px solid #444;
     margin-bottom: 10px;
+    box-shadow: 0 0 8px #2196f3;
   }
 </style>
 </head>
@@ -177,24 +178,20 @@
         const upBar = frame.querySelector('.progress-upload .progress-fill');
         const downBar = frame.querySelector('.progress-download .progress-fill');
 
-        // Simulated rates in KB/s
         const uploadRate = randomRate(50, 200);
         const downloadRate = randomRate(100, 800);
 
-        // Convert rates to % of max capacity for bar width (assume max 800 KB/s)
         const upPercent = Math.min(100, (uploadRate / 800) * 100);
         const downPercent = Math.min(100, (downloadRate / 800) * 100);
 
         upBar.style.width = upPercent + '%';
         downBar.style.width = downPercent + '%';
 
-        // Add tooltip for exact rates
         upBar.title = uploadRate.toFixed(1) + ' KB/s';
         downBar.title = downloadRate.toFixed(1) + ' KB/s';
       });
     }
 
-    // Update bars every 1.5 seconds
     updateProgressBars();
     setInterval(updateProgressBars, 1500);
   </script>
