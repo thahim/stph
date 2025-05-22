@@ -1,121 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ST Production House</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background-color: #000;
-      color: #fff;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Responsive Video Grid - Abdul Salam Thahim</title>
+<style>
+  body {
+    margin: 0; padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #fbc7a4, #c9e3ff, #a1c4fd);
+    background-size: 400% 400%;
+    animation: gradientBG 20s ease infinite;
+    color: #222;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  h1 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    text-shadow: 1px 1px 3px #fff;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    justify-items: center;
+    flex-grow: 1;
+  }
+
+  /* Responsive grid */
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
     }
-    header {
-      text-align: center;
-      padding: 60px 20px;
-      background: linear-gradient(to bottom right, #111, #000);
+  }
+  @media (max-width: 480px) {
+    .grid {
+      grid-template-columns: 1fr;
     }
-    .logo {
-      font-size: 60px;
-      font-weight: 700;
-      color: #d4af37; /* gold color */
-      letter-spacing: 5px;
-    }
-    .tagline {
-      font-size: 20px;
-      margin-top: 10px;
-      color: #ccc;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 20px;
-      background-color: #111;
-    }
-    nav a {
-      color: #d4af37;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
-    nav a:hover {
-      color: #fff;
-    }
-    .section {
-      padding: 60px 20px;
-      text-align: center;
-    }
-    .cta-btn {
-      padding: 15px 30px;
-      background-color: #d4af37;
-      color: #000;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 5px;
-      margin-top: 30px;
-      transition: background-color 0.3s;
-    }
-    .cta-btn:hover {
-      background-color: #fff;
-      color: #000;
-    }
-    footer {
-      background-color: #111;
-      color: #ccc;
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-    }
-  </style>
+  }
+
+  .frame {
+    background: linear-gradient(145deg, #a1c4fd, #c2e9fb);
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.18);
+    border: 3px solid #fff;
+    width: 180px;
+    padding: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Fix frame height */
+    max-height: 280px;
+  }
+
+  .frame:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  }
+
+  video {
+    width: 100%;
+    max-height: 140px;
+    border-radius: 10px;
+    background: black;
+    object-fit: cover;
+  }
+
+  .speed-info {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .rate-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 4px;
+  }
+
+  .progress-bar {
+    height: 12px;
+    border-radius: 8px;
+    background-color: #d0d0d0;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #43cea2, #185a9d);
+    transition: width 1.4s ease;
+  }
+
+  .progress-upload .progress-fill {
+    background: linear-gradient(90deg, #f7971e, #ffd200);
+  }
+
+  footer {
+    margin-top: 40px;
+    padding: 20px;
+    background: #222;
+    color: #fff;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-top: 5px solid #f7971e;
+  }
+
+  footer img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    margin-bottom: 10px;
+  }
+</style>
 </head>
 <body>
+  <h1>Abdul Salam Thahim - Video Grid with Streaming Rates</h1>
 
-<header>
-  <div class="logo">ST</div>
-  <div class="tagline">Production House</div>
-  <button class="cta-btn">Watch Showreel</button>
-</header>
+  <div class="grid" id="videoGrid"></div>
 
-<nav>
-  <a href="#about">About</a>
-  <a href="#work">Our Work</a>
-  <a href="#services">Services</a>
-  <a href="#contact">Contact</a>
-</nav>
+  <footer>
+    <img src="https://github.com/thahim/ai/blob/main/dp.jpg?raw=true" alt="Abdul Salam Thahim" />
+    <p>Developed by Abdul Salam Thahim</p>
+  </footer>
 
-<section id="about" class="section">
-  <h2>About Us</h2>
-  <p>We are a next-gen video production studio using AI to craft cinematic short clips for businesses, creators, and brands.</p>
-</section>
+  <script>
+    const videoURL = "https://raw.githubusercontent.com/thahim/stph/main/sanammarvi789_2025-05-22-20-01-36_1747926096865.mp4";
+    const grid = document.getElementById('videoGrid');
 
-<section id="work" class="section">
-  <h2>Our Work</h2>
-  <p>Coming Soon: A gallery of our best AI-generated video clips.</p>
-</section>
+    for(let i=0; i<9; i++){
+      const frame = document.createElement('div');
+      frame.className = 'frame';
+      frame.innerHTML = `
+        <video autoplay playsinline controls>
+          <source src="${videoURL}" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div class="speed-info">
+          <div class="rate-label">Upload Rate</div>
+          <div class="progress-bar progress-upload">
+            <div class="progress-fill"></div>
+          </div>
+          <div class="rate-label">Download Rate</div>
+          <div class="progress-bar progress-download">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+      `;
+      grid.appendChild(frame);
+    }
 
-<section id="services" class="section">
-  <h2>Services</h2>
-  <ul style="list-style: none; padding: 0;">
-    <li>• AI Video Generation</li>
-    <li>• Cinematic Reels</li>
-    <li>• Commercial Shoots</li>
-    <li>• Brand Storytelling</li>
-    <li>• Post-Production Editing</li>
-  </ul>
-</section>
+    function randomRate(min, max) {
+      return Math.random() * (max - min) + min;
+    }
 
-<section id="contact" class="section">
-  <h2>Contact Us</h2>
-  <p>Call/WhatsApp: 03332744599</p>
-</section>
+    function updateProgressBars(){
+      const frames = document.querySelectorAll('.frame');
+      frames.forEach(frame => {
+        const upBar = frame.querySelector('.progress-upload .progress-fill');
+        const downBar = frame.querySelector('.progress-download .progress-fill');
 
-<footer>
-  <p>&copy; 2025 ST Production House. All rights reserved.</p>
-</footer>
+        // Simulated rates in KB/s
+        const uploadRate = randomRate(50, 200);
+        const downloadRate = randomRate(100, 800);
 
+        // Convert rates to % of max capacity for bar width (assume max 800 KB/s)
+        const upPercent = Math.min(100, (uploadRate / 800) * 100);
+        const downPercent = Math.min(100, (downloadRate / 800) * 100);
+
+        upBar.style.width = upPercent + '%';
+        downBar.style.width = downPercent + '%';
+
+        // Add tooltip for exact rates
+        upBar.title = uploadRate.toFixed(1) + ' KB/s';
+        downBar.title = downloadRate.toFixed(1) + ' KB/s';
+      });
+    }
+
+    // Update bars every 1.5 seconds
+    updateProgressBars();
+    setInterval(updateProgressBars, 1500);
+  </script>
 </body>
 </html>
